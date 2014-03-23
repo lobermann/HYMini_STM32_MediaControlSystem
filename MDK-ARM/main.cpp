@@ -9,7 +9,6 @@ extern "C"
 	#include <stm32f10x_i2c.h>
 	#include "stm32f10x_rcc.h"
 	#include "stm32f10x_usart.h"
-	#include "I2C_UeberLib.h"
 }
 #include <stdlib.h>
 #include <string.h>
@@ -45,33 +44,11 @@ int main()
 	Display1* dp = new Display1();
 
 	dp->draw();
-	
-	I2C1_I2C2_BUS_Init();
-	
-	
-	GPIO_InitTypeDef GPIO_InitStructure;
-	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 
-  GPIO_Init(GPIOB, &GPIO_InitStructure);
 
 	uint8_t write = 0;
 	//bool toggle = false;
   while (1)	
   {
-		i2c_start(I2C2);
-		if(!i2c_write7bitAddress(I2C2, 10, I2C_DIR_TX))
-		{
-			GPIO_SetBits(GPIOB , GPIO_Pin_0);
-			i2c_write(I2C2,write++);
-			delay_ms(100);
-			GPIO_ResetBits(GPIOB , GPIO_Pin_0);
-		}
-		i2c_stop(I2C2);
-		
-		
-		
     getDisplayPoint(&display, Read_Ads7846(), &matrix ) ;
 		//Draw a Point where display is touched
 		LCD_SetPoint(display.x, display.y, utils::color_conv(0xd0,0xff,0xda));
