@@ -46,7 +46,7 @@ void Display1::inject_touch(uint16_t x, uint16_t y)
 		//Handle all touch actions in here
 		handle_touch();
 		
-		//Delay of 300ms after a touch action
+		//Delay of 30ms after a touch action
 		delay_ms(30);
 	}
 }
@@ -61,7 +61,7 @@ void Display1::handle_touch()
 		USART_SendData(USART1,x[i]);
 		while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
 	}
-	
+	delete[] x;
 }
 
 void Display1::create(bool draw)
