@@ -25,13 +25,14 @@ void Display1::inject_touch(uint16_t x, uint16_t y)
 	if(x == 0 || y == 0 || x > 240 || y > 320)
 	{		
 		//Out of bound indicates that the touch was released
+		
+		//Handle all touch actions in here, when the touch is released
+		if(m_pressed_)
+			handle_touch();
+		
 		m_pressed_ = false;
 		return;
 	}
-	
-	//As we only handle touch presses, ignore everything
-	//until the touch was released again
-	if(m_pressed_) return;
 	
 	if(m_last_touch_x_ == x && m_last_touch_y_ == y)
 	{
@@ -42,26 +43,86 @@ void Display1::inject_touch(uint16_t x, uint16_t y)
 		m_last_touch_x_ = x;
 		m_last_touch_y_ = y;
 		m_pressed_ = true;
-		
-		//Handle all touch actions in here
-		handle_touch();
-		
-		//Delay of 30ms after a touch action
-		delay_ms(30);
 	}
 }
 
 void Display1::handle_touch()
 {
-	char* x = new char[8];
-	memset(x, 0, 8);
-	utils::ItoA( m_last_touch_x_, x );
-	for(uint16_t i = 0; i < strlen(x); i++)
+	//Check if a needed screen section was touched
+	bool success = false;
+	uint8_t section = 0;
+	
+	//Center 1
+	if(m_last_touch_x_ >= 15 && m_last_touch_x_ <= 225 &&
+		 m_last_touch_y_ >= 35 && m_last_touch_y_ <= 65)
 	{
-		USART_SendData(USART1,x[i]);
-		while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+		success = true;
+		section = 11;
 	}
-	delete[] x;
+	//Center 2
+	else if(m_last_touch_x_ >= 15 && m_last_touch_x_ <= 225 &&
+		      m_last_touch_y_ >= 70 && m_last_touch_y_ <= 100)
+	{
+		success = true;
+		section = 12;
+	}
+	//Center 3
+	else if(m_last_touch_x_ >= 15 && m_last_touch_x_ <= 225 &&
+		      m_last_touch_y_ >= 105 && m_last_touch_y_ <= 135)
+	{
+		success = true;
+		section = 13;
+	}
+	//Center 4
+	else if(m_last_touch_x_ >= 15 && m_last_touch_x_ <= 225 &&
+		      m_last_touch_y_ >= 140 && m_last_touch_y_ <= 170)
+	{
+		success = true;
+		section = 14;
+	}
+	//Center 5
+	else if(m_last_touch_x_ >= 15 && m_last_touch_x_ <= 225 &&
+		      m_last_touch_y_ >= 175 && m_last_touch_y_ <= 205)
+	{
+		success = true;
+		section = 15;
+	}
+	//Center 6
+	else if(m_last_touch_x_ >= 15 && m_last_touch_x_ <= 225 &&
+		      m_last_touch_y_ >= 210 && m_last_touch_y_ <= 240)
+	{
+		success = true;
+		section = 16;
+	}
+	
+	if(success)
+	{
+		//Debug out
+		char* x = new char[3];
+		utils::ItoA(section, x);
+		MyText* text1 = new MyText(x, 10, 8, utils::color_conv(0xff,0x9c,0x00), 0x000000);
+		text1->draw();
+		delete text1;
+		delete[] x;
+		
+		char* msg = new char[5];
+		msg[0] = 0x02;
+		msg[1] = 'T';
+		msg[2] = section;
+		msg[3] = 0x03;
+		msg[4] = 0x00;
+		
+		for(uint16_t i = 0; i < strlen(msg); i++)
+		{
+			USART_SendData(USART1,msg[i]);
+			while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+		}
+		delete[] msg;
+		
+		//Short delay after sending, to prevent multiple touches per press
+		//TODO: Find a better solution then a sleep
+		delay_ms(100);
+	}
 }
 
 void Display1::create(bool draw)
