@@ -7,6 +7,7 @@ extern "C"
 	#include "TouchPanel.h"
 	#include "systick.h"
 	#include "GLCD.h"
+	#include "stm32f10x_usart.h"
 }
 
 #include "MyText.h"
@@ -31,8 +32,6 @@ public:
 	void create(bool draw);
 	void handle_touch();
 
-private:
-	
 	uint16_t m_last_touch_x_;
 	uint16_t m_last_touch_y_;
 	bool m_pressed_;

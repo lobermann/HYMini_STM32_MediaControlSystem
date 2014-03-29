@@ -1,5 +1,7 @@
 #include "Display1.h"
 
+#include "MyUtils.h"
+
 Display1::Display1()
 {
 	
@@ -7,6 +9,58 @@ Display1::Display1()
 
 Display1::~Display1()
 {
+	
+}
+
+/**
+  * @brief  This function takes the touch positions and
+  *         decides what to do with them.
+  * @param  x The x position where the touch occured
+  * @param  y The y position where the touch occured
+  * @retval None
+  */
+void Display1::inject_touch(uint16_t x, uint16_t y)
+{
+	//Check if we are out of the screen bounds or at zero
+	if(x == 0 || y == 0 || x > 240 || y > 320)
+	{		
+		//Out of bound indicates that the touch was released
+		m_pressed_ = false;
+		return;
+	}
+	
+	//As we only handle touch presses, ignore everything
+	//until the touch was released again
+	if(m_pressed_) return;
+	
+	if(m_last_touch_x_ == x && m_last_touch_y_ == y)
+	{
+		//Nothing changed
+	}
+	else
+	{
+		m_last_touch_x_ = x;
+		m_last_touch_y_ = y;
+		m_pressed_ = true;
+		
+		//Handle all touch actions in here
+		handle_touch();
+		
+		//Delay of 300ms after a touch action
+		delay_ms(30);
+	}
+}
+
+void Display1::handle_touch()
+{
+	char* x = new char[8];
+	memset(x, 0, 8);
+	utils::ItoA( m_last_touch_x_, x );
+	for(uint16_t i = 0; i < strlen(x); i++)
+	{
+		USART_SendData(USART1,x[i]);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+	}
 	
 }
 

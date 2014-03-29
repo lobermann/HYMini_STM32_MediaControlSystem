@@ -58,6 +58,35 @@ public:
 			}
 		}
 	}
+	
+	/**
+  * @brief  As the c itoa is not available, this is a custom implementation
+  * @param  z uint16_t value that should be converted
+  * @param  buf the c string that should contain the string representation
+	* @note		buf must be already be allocated
+  * @retval None
+  */
+	static void ItoA( uint16_t z, char* buf )
+	{
+		int i = 0;
+		int j;
+		char tmp;
+		unsigned u;
+	 
+
+		u = (unsigned)z;
+		do {
+			buf[i++] = '0' + u % 10;
+			u /= 10;
+		} while( u > 0 );
+
+		for( j = 0; j < i / 2; ++j ) {
+			tmp = buf[j];
+			buf[j] = buf[i-j-1];
+			buf[i-j-1] = tmp;
+		}
+		buf[i] = '\0';
+	}
 };
 
 #endif
