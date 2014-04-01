@@ -29,8 +29,8 @@ public:
 
 	void draw();
 	void undraw();
-	void create(bool draw);
-	void handle_touch();
+	virtual void create(bool draw);
+	virtual void handle_touch();
 
 	uint16_t m_last_touch_x_;
 	uint16_t m_last_touch_y_;
