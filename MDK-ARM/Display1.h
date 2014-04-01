@@ -18,12 +18,8 @@ public:
 	Display1();
 	~Display1();
 
-	void create(bool draw);
-	void draw(){create(true);};
-	void undraw(){create(false);};
-	
-	void inject_touch(uint16_t x, uint16_t y);
-	void handle_touch();
+	virtual void create(bool draw);
+	virtual void handle_touch();
 };
 
 #endif

@@ -12,40 +12,6 @@ Display1::~Display1()
 	
 }
 
-/**
-  * @brief  This function takes the touch positions and
-  *         decides what to do with them.
-  * @param  x The x position where the touch occured
-  * @param  y The y position where the touch occured
-  * @retval None
-  */
-void Display1::inject_touch(uint16_t x, uint16_t y)
-{
-	//Check if we are out of the screen bounds or at zero
-	if(x == 0 || y == 0 || x > 240 || y > 320)
-	{		
-		//Out of bound indicates that the touch was released
-		
-		//Handle all touch actions in here, when the touch is released
-		if(m_pressed_)
-			handle_touch();
-		
-		m_pressed_ = false;
-		return;
-	}
-	
-	if(m_last_touch_x_ == x && m_last_touch_y_ == y)
-	{
-		//Nothing changed
-	}
-	else
-	{
-		m_last_touch_x_ = x;
-		m_last_touch_y_ = y;
-		m_pressed_ = true;
-	}
-}
-
 void Display1::handle_touch()
 {
 	//Check if a needed screen section was touched
@@ -97,27 +63,7 @@ void Display1::handle_touch()
 	
 	if(success)
 	{
-		//Debug out
-		char* x = new char[3];
-		utils::ItoA(section, x);
-		MyText* text1 = new MyText(x, 10, 8, utils::color_conv(0xff,0x9c,0x00), 0x000000);
-		text1->draw();
-		delete text1;
-		delete[] x;
-		
-		char* msg = new char[5];
-		msg[0] = 0x02;
-		msg[1] = 'T';
-		msg[2] = section;
-		msg[3] = 0x03;
-		msg[4] = 0x00;
-		
-		for(uint16_t i = 0; i < strlen(msg); i++)
-		{
-			USART_SendData(USART1,msg[i]);
-			while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
-		}
-		delete[] msg;
+		utils::USARTWriteTouch(section);
 		
 		//Short delay after sending, to prevent multiple touches per press
 		//TODO: Find a better solution then a sleep
@@ -263,67 +209,58 @@ void Display1::create(bool draw)
 		delete text1;*/
 		
 		MyBox* box1 = new MyBox(Origin.x+5, Origin.y+5, 30, 210, utils::color_conv(0x77,0x77,0x77), 0x000000);
-		box1->draw();
+		if(draw) box1->draw();
+		else box1->undraw();
 		delete box1;
 	}
 	
 	{
 		list_y += 35;
 		MyTriangle::Point2D Origin(10,list_y);
-		/*MyText* text1 = new MyText("Kronehit", Origin.x+10, Origin.y+13, utils::color_conv(0xd0,0xff,0xda), 0x000000);
-		text1->draw();
-		delete text1;*/
 		
 		MyBox* box1 = new MyBox(Origin.x+5, Origin.y+5, 30, 210, utils::color_conv(0x77,0x77,0x77), 0x000000);
-		box1->draw();
+		if(draw) box1->draw();
+		else box1->undraw();
 		delete box1;
 	}
 	
 	{
 		list_y += 35;
 		MyTriangle::Point2D Origin(10,list_y);
-		/*MyText* text1 = new MyText("FM 4", Origin.x+10, Origin.y+13, utils::color_conv(0xd0,0xff,0xda), 0x000000);
-		text1->draw();
-		delete text1;*/
 		
 		MyBox* box1 = new MyBox(Origin.x+5, Origin.y+5, 30, 210, utils::color_conv(0x77,0x77,0x77), 0x000000);
-		box1->draw();
+		if(draw) box1->draw();
+		else box1->undraw();
 		delete box1;
 	}
 	
 	{
 		list_y += 35;
 		MyTriangle::Point2D Origin(10,list_y);
-		/*MyText* text1 = new MyText("Antenne Steiermark", Origin.x+10, Origin.y+13, utils::color_conv(0xd0,0xff,0xda), 0x000000);
-		text1->draw();
-		delete text1;*/
 		
 		MyBox* box1 = new MyBox(Origin.x+5, Origin.y+5, 30, 210, utils::color_conv(0x77,0x77,0x77), 0x000000);
-		box1->draw();
+		if(draw) box1->draw();
+		else box1->undraw();
 		delete box1;
 	}
 	
 	{
 		list_y += 35;
 		MyTriangle::Point2D Origin(10,list_y);
-		/*MyText* text1 = new MyText("Pirate Radio", Origin.x+10, Origin.y+13, utils::color_conv(0xd0,0xff,0xda), 0x000000);
-		text1->draw();
-		delete text1;*/
 		
 		MyBox* box1 = new MyBox(Origin.x+5, Origin.y+5, 30, 210, utils::color_conv(0x77,0x77,0x77), 0x000000);
-		box1->draw();
+		if(draw) box1->draw();
+		else box1->undraw();
 		delete box1;
 	}
 	
 	{
 		list_y += 35;
 		MyTriangle::Point2D Origin(10,list_y);
-		/*MyText* text1 = new MyText("EVE Radio", Origin.x+10, Origin.y+13, utils::color_conv(0xd0,0xff,0xda), 0x000000);
-		text1->draw();
-		delete text1;*/
 		
 		MyBox* box1 = new MyBox(Origin.x+5, Origin.y+5, 30, 210, utils::color_conv(0x77,0x77,0x77), 0x000000);
-		box1->draw();
+		if(draw) box1->draw();
+		else box1->undraw();
 		delete box1;
 	}
 }

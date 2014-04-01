@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "stm32f10x_usart.h"
 
 class utils
 {
@@ -86,6 +87,28 @@ public:
 			buf[i-j-1] = tmp;
 		}
 		buf[i] = '\0';
+	}
+	
+	/**
+  * @brief  Write a touch event to the USART
+  * @param  pos the position/element that was touched
+  * @retval None
+  */
+	static void USARTWriteTouch(int pos)
+	{
+		char* msg = new char[5];
+		msg[0] = 0x02;
+		msg[1] = 'T';
+		msg[2] = pos;
+		msg[3] = 0x03;
+		msg[4] = 0x00;
+		
+		for(uint16_t i = 0; i < strlen(msg); i++)
+		{
+			USART_SendData(USART1,msg[i]);
+			while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+		}
+		delete[] msg;
 	}
 };
 
