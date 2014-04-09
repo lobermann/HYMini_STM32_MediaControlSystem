@@ -3,8 +3,8 @@
 
 extern "C"
 {
-	#include "stm32f10x.h"
-	#include "stm32f10x_usart.h"
+    #include "stm32f10x.h"
+    #include "stm32f10x_usart.h"
 }
 
 #include "MyDisplay.h"
@@ -15,11 +15,11 @@ extern "C"
 class Display1 : public MyDisplay
 {
 public:
-	Display1();
-	~Display1();
+    Display1();
+    ~Display1();
 
-	virtual void create(bool draw);
-	virtual void handle_touch();
+    virtual void create(bool draw);
+    virtual void handle_touch();
 };
 
 #endif

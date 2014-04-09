@@ -90,7 +90,7 @@ public:
 	}
 	
 	/**
-  * @brief  Write a touch event to the USART
+  * @brief  Write a touch event to the USART1
   * @param  pos the position/element that was touched
   * @retval None
   */
@@ -105,10 +105,20 @@ public:
 		
 		for(uint16_t i = 0; i < strlen(msg); i++)
 		{
-			USART_SendData(USART1,msg[i]);
-			while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
+			USARTWrite(msg[i]);
 		}
 		delete[] msg;
+	}
+
+	/**
+  * @brief  Write a character to the USART1
+  * @param  c the character that should be written
+  * @retval None
+  */
+	static void USARTWrite(char& c)
+	{
+		USART_SendData(USART1,c);
+		while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
 	}
 };
 
