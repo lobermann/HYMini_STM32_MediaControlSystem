@@ -13,6 +13,25 @@ uint16_t color_conv(char r, char g, char b)
 	return ((r & 0xf8) << 8) | ((g & 0xfc) << 3) | ((b & 0xf8) >> 3);
 };
 
+int send_write_message(int fd, char type, char slot, uint16_t color, std::string text)
+{
+	const char stx = 0x02;
+	const char etx = 0x03;
+
+	std::string write_header("W"); //Write Message
+	write_header += type;
+    write_header += slot;	
+	write_header += (color >> 8) & 0xFF;
+	write_header += color & 0xFF; //In that color
+	write_header += text; //This text
+	write_header = stx + write_header + etx; //Wrap within stx and etx
+	std::cout << "Writing: " << write_header << std::endl;
+	int tx_len = write(fd, write_header.c_str(), write_header.size());
+	std::cout << write_header.size() << " : " << tx_len << std::endl;
+	usleep(10000);
+	return tx_len;
+}
+
 int main()
 {
     int uart0_filestream = -1;
@@ -81,6 +100,8 @@ int main()
 					}
 					else if(*iter == 0x03) //If end of message
 					{
+						std::cout << "Got message: " << single_msg << std::endl;
+
 						//Process the message
 						if(single_msg.at(0) == 'T')
 						{
@@ -90,17 +111,21 @@ int main()
 						{
 							//Startup event
 							std::cout << "Got startup message" << std::endl;
+							
+							send_write_message(uart0_filestream, 'H', char(0), color_conv(0x00, 0xFF, 0x3C), "Media Control System Ready");
 
-							std::string write_header("W"); //Write Message
-							write_header += 'H'; //To the header
-							uint16_t draw_color = color_conv(0xFF, 0xFF, 0xFF);
-							write_header += (draw_color >> 8) & 0xFF; 
-							write_header += draw_color & 0xFF; //In that color
-							write_header += "Media Control System Ready"; //This text
+							send_write_message(uart0_filestream, 'S', char(1), color_conv(0xFF, 0xFF, 0xFF), "Hitradio OE3");
+							send_write_message(uart0_filestream, 'S', char(2), color_conv(0xFF, 0xFF, 0xFF), "Kronehit");
+							send_write_message(uart0_filestream, 'S', char(3), color_conv(0xFF, 0xFF, 0xFF), "FM 4");
+							send_write_message(uart0_filestream, 'S', char(4), color_conv(0xFF, 0xFF, 0xFF), "Antenne Steiermark");
+							send_write_message(uart0_filestream, 'S', char(5), color_conv(0xFF, 0xFF, 0xFF), "Pirate Radio");
+							send_write_message(uart0_filestream, 'S', char(6), color_conv(0xFF, 0xFF, 0xFF), "EVE Radio");
 
-							write_header = stx + write_header + etx;
-
-							int tx_length = write(uart0_filestream, write_header.c_str(), write_header.size());
+							single_msg.clear();
+						}
+						else
+						{
+							std::cout << "Unimplemented Message" << std::endl;
 						}
 					}
 					else
@@ -108,6 +133,7 @@ int main()
 						single_msg += *iter;
 					}
 				}
+				msg_buffer.clear();
 	  		}
 	  	}
 		usleep(5000);
