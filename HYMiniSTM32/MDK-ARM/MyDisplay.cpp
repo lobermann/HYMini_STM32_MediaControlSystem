@@ -78,6 +78,18 @@ void MyDisplay::inject_touch(uint16_t x, uint16_t y)
 }
 
 /**
+  * @brief  Writes text to the header section of the Display
+  * @param  color The color of the text
+  * @param  text a c-string to the text
+  * @note   Each Inheratited class should handle this if needed
+  * @retval None
+  */
+void MyDisplay::write_header(uint16_t color, char* text)
+{
+    return;
+}
+
+/**
   * @brief  Draws the defined elements from the create function
   * @param  None
   * @retval None

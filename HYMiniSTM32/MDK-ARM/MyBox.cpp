@@ -1,5 +1,7 @@
 #include "MyBox.h"
 
+#include "MyUtils.h"
+
 /**
   * @brief  Constructs the MyBox Object, which is a border only box, not filled
   * @param  x The x position where the box should be drawn

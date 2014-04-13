@@ -1,5 +1,6 @@
 #include "USARTHandler.h"
 
+#include "MyUtils.h"
 
 USARTHandler::USARTHandler()
 {
@@ -7,6 +8,7 @@ USARTHandler::USARTHandler()
     single_buffer = new char;
     buffer_write_pos = 0;
     memset(input_buffer, 0, 129);
+    m_display_ = 0;
 }
 
 USARTHandler::~USARTHandler()
@@ -22,12 +24,38 @@ void USARTHandler::handle()
         *single_buffer = (char)USART_ReceiveData(USART1);
         if(*single_buffer == 0x02)
         {
-            //Ignore the STX Character
+            //Message start, ignore but reset buffer
+            *single_buffer = 0;
+            memset(input_buffer, 0, 128);
+            buffer_write_pos = 0;
         }
         else if(*single_buffer == 0x03)
         {
-            //Decode Message and forward to Display
-
+            if(strlen(input_buffer) > 1)
+            {
+                //Decode Message and forward to Display
+                if(input_buffer[0] == 'W')
+                {
+                    //A write message
+                    
+                    //Get the color that should be used
+                    uint16_t color = (input_buffer[2] << 8) | input_buffer[3];
+                    
+                    if(input_buffer[1] == 'H') //Write to Header
+                    {
+                        //Compact the buffer, so only the message is left
+                        for(uint8_t i = 0; i < 124; i++) //124 as the first 4 bytes are meta data
+                        {
+                            input_buffer[i] = input_buffer[i+4];
+                        }
+                        input_buffer[124] = 0;
+                        
+                        if(m_display_ != 0)
+                            m_display_->write_header(color, input_buffer);
+                    }
+                }
+            }
+            *single_buffer = 0;
             memset(input_buffer, 0, 128);
             buffer_write_pos = 0;
         }
@@ -39,6 +67,21 @@ void USARTHandler::handle()
             if(buffer_write_pos > 127) buffer_write_pos = 0;
         }
     }
+}
+
+void USARTHandler::notify_ready()
+{
+    char buffer = 0x02;
+    utils::USARTWrite(buffer);
+    buffer = 'S';
+    utils::USARTWrite(buffer);
+    buffer = 0x03;
+    utils::USARTWrite(buffer);
+}
+
+void USARTHandler::setDisplay(MyDisplay* display)
+{
+    m_display_ = display;
 }
 
 /*******************************************************************************

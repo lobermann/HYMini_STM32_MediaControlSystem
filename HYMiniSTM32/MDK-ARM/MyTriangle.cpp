@@ -1,5 +1,7 @@
 #include "MyTriangle.h"
 
+#include "MyUtils.h"
+
 /**
   * @brief  Constructs the MyTriangle Object
 	* @note   The points must be provided in a clockwise manner

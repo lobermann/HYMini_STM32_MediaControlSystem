@@ -8,8 +8,8 @@ extern "C"
 }
 #include <stdlib.h>
 #include <string.h>
-#include "Display1.h"
 #include "USARTHandler.h"
+#include "Display1.h"
 
 //Interrupt Handler for the USART
 extern "C" void TIM2_IRQHandler()
@@ -52,6 +52,10 @@ int main()
 
     Display1* dp = new Display1();
     dp->draw();
+    usart_handler->setDisplay(dp);
+    
+    //Notify the Pi that we are ready
+    usart_handler->notify_ready();
 	
     while (1)	
     {

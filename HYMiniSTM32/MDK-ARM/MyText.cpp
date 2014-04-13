@@ -1,5 +1,7 @@
 #include "MyText.h"
 
+#include "MyUtils.h"
+
 /**
   * @brief  Constructs the MyText Object
   * @param  text The text it should draw

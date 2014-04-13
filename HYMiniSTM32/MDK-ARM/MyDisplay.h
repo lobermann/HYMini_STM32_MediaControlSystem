@@ -10,14 +10,9 @@ extern "C"
 	#include "stm32f10x_usart.h"
 }
 
-#include "MyText.h"
-#include "MyBox.h"
-#include "MyTriangle.h"
-
 /**
   * @brief  This class can be used to create a view on the
-  *         display. Simply inherit an overload the create
-  *         function
+  *         display. Simply inherit an overload the functions
   */
 
 class MyDisplay
@@ -26,6 +21,8 @@ public:
 	MyDisplay();
 	~MyDisplay();
 	void inject_touch(uint16_t x, uint16_t y);
+
+    virtual void write_header(uint16_t color, char* text);
 
 	void draw();
 	void undraw();

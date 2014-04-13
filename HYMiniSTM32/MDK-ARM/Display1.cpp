@@ -1,6 +1,9 @@
 #include "Display1.h"
 
 #include "MyUtils.h"
+#include "MyBox.h"
+#include "MyTriangle.h"
+#include "MyText.h"
 
 Display1::Display1()
 {
@@ -69,6 +72,16 @@ void Display1::handle_touch()
         //TODO: Find a better solution then a sleep
         delay_ms(100);
     }
+}
+
+void Display1::write_header(uint16_t color, char* text)
+{
+    //First clear the area
+    utils::drawBox(6, 6, 228, 18, 0x000000);
+    MyText* header = new MyText(text, 10, 8, utils::color_conv(0xff,0x9c,0x00), 0x000000);
+    header->draw();
+    delete header;
+    
 }
 
 void Display1::create(bool draw)

@@ -9,8 +9,6 @@ extern "C"
 	#include "GLCD.h"
 }
 
-#include "MyUtils.h"
-
 class MyBox
 {
 public:

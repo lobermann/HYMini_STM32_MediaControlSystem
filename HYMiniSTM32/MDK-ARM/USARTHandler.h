@@ -11,7 +11,7 @@ extern "C"
 
 #include <stdlib.h>
 #include <string.h>
-
+#include "MyDisplay.h"
 
 class USARTHandler
 {
@@ -24,11 +24,15 @@ public:
 	void USART_Configuration(void);
 
 	void handle();
+    void notify_ready();
+    void setDisplay(MyDisplay* display);
 
 private:
 	char* input_buffer;
 	char* single_buffer;
 	uint8_t buffer_write_pos;
+
+    MyDisplay* m_display_;
 
 };
 

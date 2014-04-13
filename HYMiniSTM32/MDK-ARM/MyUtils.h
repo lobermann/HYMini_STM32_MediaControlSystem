@@ -3,7 +3,14 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "stm32f10x_usart.h"
+
+extern "C"
+{
+    #include "stm32f10x_usart.h"
+    #include "TouchPanel.h"
+    #include "systick.h"
+    #include "GLCD.h"
+}
 
 class utils
 {
@@ -74,7 +81,6 @@ public:
 		char tmp;
 		unsigned u;
 	 
-
 		u = (unsigned)z;
 		do {
 			buf[i++] = '0' + u % 10;

@@ -9,8 +9,6 @@ extern "C"
 	#include "GLCD.h"
 }
 
-#include "MyUtils.h"
-
 //Screen height and width for the bounding box
 #define SCREEN_WITH 240
 #define SCREEN_HEIGHT 320
