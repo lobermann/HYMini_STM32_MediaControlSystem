@@ -10,20 +10,60 @@ extern "C"
 #include <string.h>
 #include "USARTHandler.h"
 #include "Display1.h"
+#include "MyUtils.h"
+
+char* usart_buffer;
+char* ready_buffer;
+uint8_t usart_write_pos = 0;
+bool data_ready = false;
+
+uint8_t debug = 0;
 
 //Interrupt Handler for the USART
-extern "C" void TIM2_IRQHandler()
+extern "C" void USART1_IRQHandler()
 {
-    if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
+    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
     {
-        //Seems to get better performance when reading
-        //the USART Buffer from the main loop ...
-        TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
+        char c = USART1->DR;
+        if(c == 2)
+        {
+            memset(usart_buffer, 0, 129);
+            usart_write_pos = 0;
+        }
+        else if(c == 3)
+        {
+            debug++;
+            memcpy(ready_buffer, usart_buffer, 128);
+            data_ready = true;
+            if(debug == 2)
+            {
+                debug = 2;
+            }
+            memset(usart_buffer, 0, 129);
+            usart_write_pos = 0;
+        }
+        else
+        {
+            usart_buffer[usart_write_pos++] = c;
+            if(usart_write_pos > 128)
+            {
+                usart_write_pos = 0;
+                memset(usart_buffer, 0, 129);
+            }
+        }
     }
+    
+    USART_ClearITPendingBit(USART1, USART_IT_RXNE); 
+    //USART_ClearITPendingBit(USART1, USART_IT_TXE); 
 }
 
 int main()
 {
+    usart_buffer = new char[129];
+    ready_buffer = new char[129];
+    memset(usart_buffer, 0, 129);
+    memset(ready_buffer, 0, 129);
+    
     SystemInit();		
     LCD_Initializtion();
     delay_init();
@@ -46,7 +86,7 @@ int main()
 
     USARTHandler* usart_handler = new USARTHandler();
 
-    usart_handler->TIM_Configuration();
+    //usart_handler->TIM_Configuration();
     usart_handler->NVIC_Configuration();
     usart_handler->USART_Configuration();
 
@@ -61,7 +101,18 @@ int main()
     {
         getDisplayPoint(&display, Read_Ads7846(), &matrix ) ;
 
-        usart_handler->handle();
+        if(data_ready)
+        {
+            data_ready = false;
+            usart_handler->setBuffer(ready_buffer);
+            memset(ready_buffer, 0, 129);
+            if(debug == 2)
+            {
+                debug = 2;
+            }
+            usart_handler->handle();
+            usart_handler->notify_receive_ready();
+        }
 
         dp->inject_touch(display.x, display.y);
     }

@@ -25,7 +25,9 @@ public:
 
 	void handle();
     void notify_ready();
+    void notify_receive_ready();
     void setDisplay(MyDisplay* display);
+    void setBuffer(char* data);
 
 private:
 	char* input_buffer;

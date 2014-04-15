@@ -17,80 +17,74 @@ USARTHandler::~USARTHandler()
     delete single_buffer;
 }
 
+void USARTHandler::setBuffer(char* data)
+{
+    for(uint8_t i = 0; i < 129; i++)
+        input_buffer[i] = data[i];
+}
+
 void USARTHandler::handle()
 {
-    while(USART_GetFlagStatus(USART1, USART_FLAG_RXNE) != RESET)
+    //Decode Message and forward to Display
+    if(input_buffer[0] == 'W')
     {
-        *single_buffer = (char)USART_ReceiveData(USART1);
-        if(*single_buffer == 0x02)
+        //A write message
+        // Position:
+        // 0 = W - Write Message
+        // 1 = H / S - Write to Header or Slot
+        // 2 = Slot Number or 0
+        // 3+4 = color
+        // 5+128 = text
+        
+        //The type
+        char type = input_buffer[1];
+        
+        //Get the slot, Substract slot difference, as we can't use 0x02 and 0x03
+        uint8_t slot = input_buffer[2] - 10;
+        
+        //Get the color that should be used
+        uint16_t color = (input_buffer[3] << 8) | input_buffer[4];
+        
+        //Compact the buffer, so only the message is left
+        input_buffer[123] = 0;
+        for(uint8_t i = 0; i < 123; i++) //124 as the first 5 bytes are meta data
         {
-            //Message start, ignore but reset buffer
-            *single_buffer = 0;
-            memset(input_buffer, 0, 128);
-            buffer_write_pos = 0;
+            input_buffer[i] = input_buffer[i+5];
         }
-        else if(*single_buffer == 0x03)
+        
+        if(type == 'H') //Write to Header
         {
-            if(strlen(input_buffer) > 1)
-            {
-                //Decode Message and forward to Display
-                if(input_buffer[0] == 'W')
-                {
-                    //A write message
-                    // Position:
-                    // 0 = W - Write Message
-                    // 1 = H / S - Write to Header or Slot
-                    // 2 = Slot Number or 0
-                    // 3+4 = color
-                    // 5+128 = text
-                    
-                    //The the type
-                    char type = input_buffer[1];
-                    
-                    //Get the slot
-                    uint8_t slot = input_buffer[2];
-                    
-                    //Get the color that should be used
-                    uint16_t color = (input_buffer[3] << 8) | input_buffer[4];
-                    
-                    //Compact the buffer, so only the message is left
-                    input_buffer[123] = 0;
-                    for(uint8_t i = 0; i < 123; i++) //124 as the first 5 bytes are meta data
-                    {
-                        input_buffer[i] = input_buffer[i+5];
-                    }
-                    
-                    if(type == 'H') //Write to Header
-                    {
-                        if(m_display_ != 0)
-                            m_display_->write_header(color, input_buffer);
-                    }
-                    if(type == 'S') //Write to Slot
-                    {
-                        if(m_display_ != 0)
-                            m_display_->write_slot(slot, color, input_buffer);
-                    }
-                }
-            }
-            *single_buffer = 0;
-            memset(input_buffer, 0, 128);
-            buffer_write_pos = 0;
+            if(m_display_ != 0)
+                m_display_->write_header(color, input_buffer);
         }
-        else
+        if(type == 'S') //Write to Slot
         {
-            input_buffer[buffer_write_pos] = *single_buffer;
-            *single_buffer = 0;
-            buffer_write_pos++;
-            if(buffer_write_pos > 127) buffer_write_pos = 0;
+            if(m_display_ != 0)
+                m_display_->write_slot(slot, color, input_buffer);
         }
     }
+    memset(input_buffer, 0, 129);
 }
 
 void USARTHandler::notify_ready()
 {
-    char buffer = 0x02;
+    char buffer = 0x00;
+    utils::USARTWrite(buffer);
+    buffer = 0x02;
     utils::USARTWrite(buffer);
     buffer = 'S';
+    utils::USARTWrite(buffer);
+    buffer = 0x03;
+    utils::USARTWrite(buffer);
+}
+
+void USARTHandler::notify_receive_ready()
+{
+    char buffer = 0x00;
+    utils::USARTWrite(buffer);
+    buffer = 0x02;
+    utils::USARTWrite(buffer);
+    buffer = 'A';
     utils::USARTWrite(buffer);
     buffer = 0x03;
     utils::USARTWrite(buffer);
@@ -133,7 +127,7 @@ void USARTHandler::USART_Configuration(void)
 
     USART_Init(USART1, &USART_InitStructure); 
     USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-    USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+    //USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
     USART_Cmd(USART1, ENABLE);
 }
 
@@ -165,10 +159,10 @@ void USARTHandler::NVIC_Configuration(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure; 
      
-    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);  													
-    NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 4;	
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);  													
+    NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;	
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
