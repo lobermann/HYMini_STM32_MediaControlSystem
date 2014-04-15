@@ -78,10 +78,72 @@ void Display1::write_header(uint16_t color, char* text)
 {
     //First clear the area
     utils::drawBox(6, 6, 228, 18, 0x000000);
-    MyText* header = new MyText(text, 10, 8, utils::color_conv(0xff,0x9c,0x00), 0x000000);
+    
+    //Limit the text to 30 chars
+    if(strlen(text) > 30) 
+        text[30] = 0;
+    
+    MyText* header = new MyText(text, 10, 8, color, 0x000000);
     header->draw();
     delete header;
-    
+}
+
+void Display1::write_slot(uint8_t slot, uint16_t color, char* text)
+{
+    //10, 30
+    if(slot == 1)
+    {
+        //First clear the area
+        utils::drawBox(15+1, 35+1, 208, 28, 0x000000);
+        MyText* slottext = new MyText(text, 20, 30+13, color, 0x000000);
+        slottext->draw();
+        delete slottext;
+    }
+    else if(slot == 2)
+    {
+        //First clear the area
+        utils::drawBox(15+1, 70+1, 208, 28, 0x000000);
+        MyText* slottext = new MyText(text, 20, 65+13, color, 0x000000);
+        slottext->draw();
+        delete slottext;
+    }
+    else if(slot == 3)
+    {
+        //First clear the area
+        utils::drawBox(15+1, 105+1, 208, 28, 0x000000);
+        MyText* slottext = new MyText(text, 20, 100+13, color, 0x000000);
+        slottext->draw();
+        delete slottext;
+    }
+    else if(slot == 4)
+    {
+        //First clear the area
+        utils::drawBox(15+1, 140+1, 208, 28, 0x000000);
+        MyText* slottext = new MyText(text, 20, 135+13, color, 0x000000);
+        slottext->draw();
+        delete slottext;
+    }
+    else if(slot == 5)
+    {
+        //First clear the area
+        utils::drawBox(15+1, 175+1, 208, 28, 0x000000);
+        MyText* slottext = new MyText(text, 20, 170+13, color, 0x000000);
+        slottext->draw();
+        delete slottext;
+    }
+    else if(slot == 6)
+    {
+        //First clear the area
+        utils::drawBox(15+1, 210+1, 208, 28, 0x000000);
+        MyText* slottext = new MyText(text, 20, 205+13, color, 0x000000);
+        slottext->draw();
+        delete slottext;
+    }
+    else
+    {
+        //We only have six slots, so ignore the rest
+    }
+   
 }
 
 void Display1::create(bool draw)
@@ -213,14 +275,9 @@ void Display1::create(bool draw)
         else utils::drawBox(Origin.x+25, Origin.y+14, 16, 3, 0x0000);
     }
 	
-	//TODO: Text below needs to be drawn via I2C
     uint16_t list_y = 30;
     {
         MyTriangle::Point2D Origin(10,list_y);
-        /*MyText* text1 = new MyText("Hitradio OE3", Origin.x+10, Origin.y+13, utils::color_conv(0xd0,0xff,0xda), 0x000000);
-        text1->draw();
-        delete text1;*/
-
         MyBox* box1 = new MyBox(Origin.x+5, Origin.y+5, 30, 210, utils::color_conv(0x77,0x77,0x77), 0x000000);
         if(draw) box1->draw();
         else box1->undraw();

@@ -423,6 +423,16 @@
               <FileType>5</FileType>
               <FilePath>.\Display1.h</FilePath>
             </File>
+            <File>
+              <FileName>USARTHandler.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>.\USARTHandler.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>USARTHandler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\USARTHandler.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

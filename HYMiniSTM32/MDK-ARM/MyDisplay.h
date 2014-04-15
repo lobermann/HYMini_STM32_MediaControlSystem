@@ -23,6 +23,7 @@ public:
 	void inject_touch(uint16_t x, uint16_t y);
 
     virtual void write_header(uint16_t color, char* text);
+    virtual void write_slot(uint8_t slot, uint16_t color, char* text);
 
 	void draw();
 	void undraw();

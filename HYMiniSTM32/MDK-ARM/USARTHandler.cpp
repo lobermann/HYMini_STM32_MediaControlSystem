@@ -37,21 +37,38 @@ void USARTHandler::handle()
                 if(input_buffer[0] == 'W')
                 {
                     //A write message
+                    // Position:
+                    // 0 = W - Write Message
+                    // 1 = H / S - Write to Header or Slot
+                    // 2 = Slot Number or 0
+                    // 3+4 = color
+                    // 5+128 = text
+                    
+                    //The the type
+                    char type = input_buffer[1];
+                    
+                    //Get the slot
+                    uint8_t slot = input_buffer[2];
                     
                     //Get the color that should be used
-                    uint16_t color = (input_buffer[2] << 8) | input_buffer[3];
+                    uint16_t color = (input_buffer[3] << 8) | input_buffer[4];
                     
-                    if(input_buffer[1] == 'H') //Write to Header
+                    //Compact the buffer, so only the message is left
+                    input_buffer[123] = 0;
+                    for(uint8_t i = 0; i < 123; i++) //124 as the first 5 bytes are meta data
                     {
-                        //Compact the buffer, so only the message is left
-                        for(uint8_t i = 0; i < 124; i++) //124 as the first 4 bytes are meta data
-                        {
-                            input_buffer[i] = input_buffer[i+4];
-                        }
-                        input_buffer[124] = 0;
-                        
+                        input_buffer[i] = input_buffer[i+5];
+                    }
+                    
+                    if(type == 'H') //Write to Header
+                    {
                         if(m_display_ != 0)
                             m_display_->write_header(color, input_buffer);
+                    }
+                    if(type == 'S') //Write to Slot
+                    {
+                        if(m_display_ != 0)
+                            m_display_->write_slot(slot, color, input_buffer);
                     }
                 }
             }

@@ -13,7 +13,7 @@ I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC8D64)
 F (..\USER\stm32f10x_conf.h)(0x4D127A4E)()
-F (.\main.cpp)(0x534AA3C1)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
+F (.\main.cpp)(0x534AA3D1)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
 I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x4CC36ED3)
 I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC8D60)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x5284D69A)
@@ -33,11 +33,11 @@ I (C:\Keil\ARM\ARMCC\include\string.h)(0x5284D69A)
 I (USARTHandler.h)(0x534AA22C)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x5300166D)
-I (MyDisplay.h)(0x534AA171)
-I (Display1.h)(0x534A95AA)
+I (MyDisplay.h)(0x534AE340)
+I (Display1.h)(0x534AE3BA)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x5284D694)
-F (.\Display1.cpp)(0x534AA3A9)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\display1.o --omf_browse .\obj\display1.crf --depend .\obj\display1.d)
-I (Display1.h)(0x534A95AA)
+F (.\Display1.cpp)(0x534AEA0F)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\display1.o --omf_browse .\obj\display1.crf --depend .\obj\display1.d)
+I (Display1.h)(0x534AE3BA)
 I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x4CC36ED3)
 I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC8D60)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x5284D69A)
@@ -50,7 +50,7 @@ I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC8D64)
-I (MyDisplay.h)(0x534AA171)
+I (MyDisplay.h)(0x534AE340)
 I (..\USER\TouchPanel\TouchPanel.h)(0x4D127B4F)
 I (..\USER\SysTick\systick.h)(0x4CCE98F8)
 I (..\USER\GLCD\GLCD.h)(0x4F4D6BBC)
@@ -61,8 +61,8 @@ I (C:\Keil\ARM\ARMCC\include\string.h)(0x5284D69A)
 I (MyBox.h)(0x534A9AAA)
 I (MyTriangle.h)(0x534A9AB3)
 I (MyText.h)(0x534A9AA1)
-F (.\Display1.h)(0x534A95AA)()
-F (.\USARTHandler.cpp)(0x534AA1C8)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\usarthandler.o --omf_browse .\obj\usarthandler.crf --depend .\obj\usarthandler.d)
+F (.\Display1.h)(0x534AE3BA)()
+F (.\USARTHandler.cpp)(0x534AF0BC)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\usarthandler.o --omf_browse .\obj\usarthandler.crf --depend .\obj\usarthandler.d)
 I (USARTHandler.h)(0x534AA22C)
 I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x4CC36ED3)
 I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC8D60)
@@ -79,7 +79,7 @@ I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_dma.h)(0x5300166D)
 I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x5284D69A)
 I (C:\Keil\ARM\ARMCC\include\string.h)(0x5284D69A)
-I (MyDisplay.h)(0x534AA171)
+I (MyDisplay.h)(0x534AE340)
 I (..\USER\TouchPanel\TouchPanel.h)(0x4D127B4F)
 I (..\USER\SysTick\systick.h)(0x4CCE98F8)
 I (..\USER\GLCD\GLCD.h)(0x4F4D6BBC)
@@ -459,8 +459,8 @@ I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_tim.h)(0x4CBC8D64)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h)(0x4CBC8D64)
 F (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm\startup_stm32f10x_hd.s)(0x4CBC8D62)(--cpu Cortex-M3 -g --apcs=interwork --pd "__MICROLIB SETA 1"-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x--list .\list\startup_stm32f10x_hd.lst --xref -o .\obj\startup_stm32f10x_hd.o --depend .\obj\startup_stm32f10x_hd.d)
-F (.\MyDisplay.cpp)(0x534AA2E7)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\mydisplay.o --omf_browse .\obj\mydisplay.crf --depend .\obj\mydisplay.d)
-I (MyDisplay.h)(0x534AA171)
+F (.\MyDisplay.cpp)(0x534AE9F9)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\mydisplay.o --omf_browse .\obj\mydisplay.crf --depend .\obj\mydisplay.d)
+I (MyDisplay.h)(0x534AE340)
 I (..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\stm32f10x.h)(0x4CC36ED3)
 I (..\Libraries\CMSIS\CM3\CoreSupport\core_cm3.h)(0x4CBC8D60)
 I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x5284D69A)
@@ -477,7 +477,7 @@ I (..\USER\SysTick\systick.h)(0x4CCE98F8)
 I (..\USER\GLCD\GLCD.h)(0x4F4D6BBC)
 I (C:\Keil\ARM\ARMCC\include\stdlib.h)(0x5284D69A)
 I (..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_usart.h)(0x4CBC8D64)
-F (.\MyDisplay.h)(0x534AA171)()
+F (.\MyDisplay.h)(0x534AE340)()
 F (.\MyUtils.h)(0x534A958D)()
 F (.\MyText.cpp)(0x534A9AA6)(--cpp -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\Libraries\CMSIS\CM3\CoreSupport -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x\startup\arm -I..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\Libraries\STM32F10x_StdPeriph_Driver\src -I..\USER -I..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\USER\TouchPanel -I..\USER\GLCD -I..\USER\SysTick-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_HD -o .\obj\mytext.o --omf_browse .\obj\mytext.crf --depend .\obj\mytext.d)
 I (MyText.h)(0x534A9AA1)

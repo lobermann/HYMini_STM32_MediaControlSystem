@@ -19,6 +19,7 @@ public:
     ~Display1();
 
     virtual void write_header(uint16_t color, char* text);
+    virtual void write_slot(uint8_t slot, uint16_t color, char* text);
     virtual void create(bool draw);
     virtual void handle_touch();
 };

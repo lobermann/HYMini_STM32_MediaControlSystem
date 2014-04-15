@@ -89,6 +89,20 @@ void MyDisplay::write_header(uint16_t color, char* text)
     return;
 }
 
+
+/**
+  * @brief  Writes text to the a specific slot on the display
+  * @param  slot, the slot the text should be written to
+  * @param  color The color of the text
+  * @param  text a c-string to the text
+  * @note   Each Inheratited class should handle this if needed
+  * @retval None
+  */
+void MyDisplay::write_slot(uint8_t slot, uint16_t color, char* text)
+{
+    return;
+}
+
 /**
   * @brief  Draws the defined elements from the create function
   * @param  None
