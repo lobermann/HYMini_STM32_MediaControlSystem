@@ -15,9 +15,8 @@ extern "C"
 char* usart_buffer;
 char* ready_buffer;
 uint8_t usart_write_pos = 0;
+uint8_t remaining_message_size = 0;
 bool data_ready = false;
-
-uint8_t debug = 0;
 
 //Interrupt Handler for the USART
 extern "C" void USART1_IRQHandler()
@@ -25,22 +24,20 @@ extern "C" void USART1_IRQHandler()
     if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
     {
         char c = USART1->DR;
-        if(c == 2)
+        if(usart_write_pos == 0 && c == 0)
         {
-            memset(usart_buffer, 0, 129);
-            usart_write_pos = 0;
+            //First byte, ignore
         }
-        else if(c == 3)
+        else if(usart_write_pos == 5)
         {
-            debug++;
-            memcpy(ready_buffer, usart_buffer, 128);
-            data_ready = true;
-            if(debug == 2)
+            //The 6th byte is the remaining text length
+            remaining_message_size = c;
+            usart_buffer[usart_write_pos++] = c;
+            if(usart_write_pos > 128)
             {
-                debug = 2;
+                usart_write_pos = 0;
+                memset(usart_buffer, 0, 129);
             }
-            memset(usart_buffer, 0, 129);
-            usart_write_pos = 0;
         }
         else
         {
@@ -49,6 +46,16 @@ extern "C" void USART1_IRQHandler()
             {
                 usart_write_pos = 0;
                 memset(usart_buffer, 0, 129);
+            }
+            
+            //Check for message end
+            if(usart_write_pos >= (6 + remaining_message_size) )
+            {
+                memcpy(ready_buffer, usart_buffer, 128);
+                data_ready = true;
+                memset(usart_buffer, 0, 129);
+                usart_write_pos = 0;
+                remaining_message_size = 0;
             }
         }
     }
@@ -106,10 +113,6 @@ int main()
             data_ready = false;
             usart_handler->setBuffer(ready_buffer);
             memset(ready_buffer, 0, 129);
-            if(debug == 2)
-            {
-                debug = 2;
-            }
             usart_handler->handle();
             usart_handler->notify_receive_ready();
         }

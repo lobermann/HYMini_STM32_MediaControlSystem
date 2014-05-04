@@ -34,7 +34,10 @@ void USARTHandler::handle()
         // 1 = H / S - Write to Header or Slot
         // 2 = Slot Number or 0
         // 3+4 = color
-        // 5+128 = text
+        // 5 = length of the text + checksum
+        // 6+128 = text
+        
+        //TODO: Verify the checksum
         
         //The type
         char type = input_buffer[1];
@@ -46,11 +49,14 @@ void USARTHandler::handle()
         uint16_t color = (input_buffer[3] << 8) | input_buffer[4];
         
         //Compact the buffer, so only the message is left
-        input_buffer[123] = 0;
-        for(uint8_t i = 0; i < 123; i++) //124 as the first 5 bytes are meta data
+        input_buffer[122] = 0;
+        for(uint8_t i = 0; i < 122; i++) //122 as the first 6 bytes are meta data
         {
-            input_buffer[i] = input_buffer[i+5];
+            input_buffer[i] = input_buffer[i+6];
         }
+        
+        //Clear the checksum
+        input_buffer[strlen(input_buffer)-1] = 0;
         
         if(type == 'H') //Write to Header
         {
