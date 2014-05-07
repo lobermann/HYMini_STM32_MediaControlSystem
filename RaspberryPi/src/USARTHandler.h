@@ -20,6 +20,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "MediaPlayer.h"
+
 class USARTHandler 
 {
 public:
@@ -36,6 +38,9 @@ private:
     std::string m_input_buffer_;
     
     std::list<std::string> m_output_buffer_;
+    
+    //TODO: Needs to be moved to some more global position
+    MediaPlayer m_player_;
 };
 
 #endif	/* USARTHANDLER_H */

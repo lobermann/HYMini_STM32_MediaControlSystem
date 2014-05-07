@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <list>
 #include <ctime>
+#include <signal.h>
 
 #include "GPIO.h"
 #include "USARTHandler.h"
@@ -29,6 +30,9 @@ int main()
     gpio17.setval_gpio("0");
     std::time_t stm_on_time = std::time(0);
     bool stm_on_status = true;
+    
+    //Ignore the child signals, so that they are removed by the kernel after finished
+    signal(SIGCHLD, SIG_IGN);
 
     while (true)
     {

@@ -8,6 +8,7 @@
 #include "USARTHandler.h"
 
 #include "utils.h"
+#include "MediaPlayer.h"
 
 USARTHandler::USARTHandler()
 { 
@@ -96,27 +97,27 @@ bool USARTHandler::read()
                         //Touch event
                         if(single_msg.at(1) == (char)11)
                         {
-                            
+                            m_player_.playURL("http://mp3stream7.apasf.apa.at:8000");
                         }
                         else if(single_msg.at(1) == (char)12)
                         {
-                            
+                            m_player_.playURL("http://raj.krone.at:80/kronehit-hd.mp3");
                         }
                         else if(single_msg.at(1) == (char)13)
                         {
-                            
+                            m_player_.playURL("http://mp3stream1.apasf.apa.at:8000");
                         }
                         else if(single_msg.at(1) == (char)14)
                         {
-                            
+                            m_player_.playURL("http://livestream.antenne.at");
                         }
                         else if(single_msg.at(1) == (char)15)
                         {
-                            
+                            m_player_.playURL("http://stream-ice.mtgradio.com:8080/stat_bandit");
                         }
                         else if(single_msg.at(1) == (char)16)
                         {
-                            
+                            m_player_.playURL("http://rs24.stream24.net:8000");
                         }
                     }
                     else if (single_msg.at(0) == 'S')
@@ -130,7 +131,7 @@ bool USARTHandler::read()
                         send_write_message(m_uart_fd_, 'S', char(12), color_conv(0xFF, 0xFF, 0xFF), "Kronehit");
                         send_write_message(m_uart_fd_, 'S', char(13), color_conv(0xFF, 0xFF, 0xFF), "FM 4");
                         send_write_message(m_uart_fd_, 'S', char(14), color_conv(0xFF, 0xFF, 0xFF), "Antenne Steiermark");
-                        send_write_message(m_uart_fd_, 'S', char(15), color_conv(0xFF, 0xFF, 0xFF), "Pirate Radio");
+                        send_write_message(m_uart_fd_, 'S', char(15), color_conv(0xFF, 0xFF, 0xFF), "Bandit Rock SE");
                         send_write_message(m_uart_fd_, 'S', char(16), color_conv(0xFF, 0xFF, 0xFF), "Soundportal Graz");
 
                         single_msg.clear();
